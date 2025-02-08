@@ -1,0 +1,95 @@
+@using Blogger.Enums
+@model List<Post>
+@{
+	ViewData["Title"] = "List of Posts";
+}
+@if (TempData["success-messege"] != null)
+{
+	<div class="mt-2 alert alert-success alert-dismissible fade show" role="alert">
+		@TempData["success-messege"]
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+}
+<partial name="~/Views/Shared/Common/_TitleNavigationPartial.cshtml" model='("List of Posts", "/", "Dashboard", "Posts")' />
+
+<div class="row mt-3">
+	<div class="col-12">
+		<form asp-action="List" method="get" class="d-flex mb-3 align-items-center">
+			<input type="search"
+				   class="form-control me-2"
+				   placeholder="Search Posts..."
+				   aria-label="Search"
+				   name="search" />
+
+
+			<select asp-items="@Html.GetEnumSelectList<Status>()" name="status" class="form-select me-2" aria-label="Select Category">
+				<option value="" selected>All Status</option>
+			</select>
+
+			<button type="submit" class="btn btn-primary">Search</button>
+		</form>
+	</div>
+</div>
+
+
+<div class="row">
+	<p class="col-12 text-end">
+		<a asp-action="Create" role="button" class="btn btn-info fs-5">Add New Blog</a>
+	</p>
+</div>
+
+<div class="card p-2">
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped table-hover">
+				<thead class="thead-dark text-center">
+					<tr>
+						<th scope="col">Cover</th>
+						<th scope="col">Parent Id</th>
+						<th scope="col">Category</th>
+						<th scope="col">Title</th>
+						<th scope="col">Content</th>
+						<th scope="col">Status</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody class="text-center">
+					@if (Model.Any())
+					{
+						@foreach (var post in Model.OrderByDescending(x =>x.Id)){
+							<tr>
+								<td>
+									<img src="@post.Media" alt="default-post" class="img-thumbnail" width="100" height="100">
+								</td>
+								<td>@post.CategoryId</td>
+								<td>@post.Category.Name</td>
+								<td class="text-truncate" style="max-width: 200px;">@post.Title</td>
+								<td class="text-truncate" style="max-width: 300px;">@Html.Raw(@post.Content)</td>
+								<td>
+									<span class="badge bg-success">@post.Status</span>
+								</td>
+								<td>
+									<div class="d-flex gap-2 align-items-center justify-content-center">
+										<a asp-action="Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>
+										<a asp-action="Details" class="btn btn-info" asp-route-id="@post.Id">View</a>
+										<form asp-route-id="@post.Id" asp-action="Delete" method="post">
+											<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+										</form>
+									</div>
+								</td>
+							</tr>
+						}
+					}
+					else
+					{
+						<tr>
+							<td colspan="8" class="text-center text-danger fs-3">
+								Ooops! No Blogs Found
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

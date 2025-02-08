@@ -1,0 +1,81 @@
+@model List<User>
+@{
+    ViewData["Title"] = "User List";
+}
+@if(TempData["success-messege"] != null)
+{
+    <div class="mt-2 alert alert-success alert-dismissible fade show" role="alert">
+		@TempData["success-messege"]
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+}
+<partial name="~/Views/Shared/Common/_TitleNavigationPartial.cshtml" model='("User List", "/", "Dashboard", "Lists")' />
+<div class="row mt-3">
+	<div class="col-12">
+		<form asp-action="List" method="get" class="d-flex mb-3 align-items-center">
+			<input type="search"
+				   class="form-control me-2"
+				   placeholder="Search User..."
+				   aria-label="Search"
+				   name="search" />
+			<button type="submit" class="btn btn-primary">Search</button>
+		</form>
+	</div>
+</div>
+<div class="row">
+    <p class="col-12 text-end">
+        <a asp-action="Create" role="button" class="btn btn-info fs-5">Add New User</a>
+    </p>
+</div>
+<div class="card p-2">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="thead-dark text-center">
+                    <tr>
+                        <th scope="col">Profile Picture</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Intro</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @if (Model.Any())
+                    {
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td><img class="img-thumbnail" width="100" height="100" src="@user.Profile" alt="Profile Picture"></td>
+                                <td>@user.FirstName @user.MiddleName @user.LastName</td>
+                                <td>@Html.Raw(user.Intro)</td>
+                                <td>@user.Phone</td>                          
+                                <td>@user.Email</td>
+                                <td>@user.Password</td>
+                                <td>
+                                    <div class="d-flex gap-2 align-items-center justify-content-center">
+                                        <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-primary">Edit</a>
+                                        <a asp-action="Details" asp-route-id="@user.Id" class="btn btn-info">View</a>
+                                        <form asp-action="Delete" asp-route-id="@user.Id">
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are You Sure You want to Delete This Category?')">Delete</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center text-danger fs-3">
+                                Ooops! No Users Found
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

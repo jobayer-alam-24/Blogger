@@ -1,0 +1,80 @@
+@model User
+@{
+    ViewData["Title"] = "Edit A User";
+}
+@section Styles
+{
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet" asp-append-version="true">
+}
+<partial name="~/Views/Shared/Common/_TitleNavigationPartial.cshtml" model='("Edit A User", "/", "Dashboard", "Edit A User")'></partial>
+<div class="card">
+    <form asp-action="Edit" method="post">
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <div class="card-body">
+            <div class="mb-3 row">
+                 <label asp-for="FirstName" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" asp-for="FirstName" placeholder="Enter Your First Name">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                 <label asp-for="MiddleName" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" asp-for="MiddleName" placeholder="Enter Your Middle Name">
+                    <span asp-validation-for="MiddleName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                 <label asp-for="LastName" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" asp-for="LastName" placeholder="Enter Your Last Name">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Phone" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" asp-for="Phone" placeholder="Enter Your Phone Number">
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Email" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input class="form-control" type="email" asp-for="Email" placeholder="Enter Your Email Address">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Password" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input class="form-control" type="password" asp-for="Password" placeholder="Enter Your Password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Intro" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <textarea id="summernote" class="form-control" style="resize: none;" asp-for="Intro" rows="5"
+                        placeholder="Write about you..."></textarea>
+                    <span asp-validation-for="Intro" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a asp-action="List" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#summernote').summernote();
+        })
+    </script>
+}

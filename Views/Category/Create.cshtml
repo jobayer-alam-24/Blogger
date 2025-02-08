@@ -1,0 +1,67 @@
+@using Blogger.Enums
+@using System.Collections
+@model Category
+@{
+    ViewData["Title"] = "Create New Category";
+}
+@section Styles{
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet" asp-append-version="true">
+}
+<partial name="~/Views/Shared/Common/_TitleNavigationPartial.cshtml"
+    model='("Create A Category", "/", "Dashboard", "Category")'></partial>
+<div class="card">
+    <form asp-action="Create" method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="card-body">
+            <div class="mb-3 row">
+                <label asp-for="Name" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" asp-for="Name"
+                        placeholder="Enter the name of the Category">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Status" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <select asp-for="Status" asp-items="@Html.GetEnumSelectList<Status>()" class="form-control">
+                        <option value=" " selected="selected">--Select Category Status--</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="ParentId" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <select asp-for="ParentId" class="form-control" asp-items="@(ViewBag.Lists)">
+                        <option value="" selected="selected">--Select Parent Category--</option>
+                    </select>
+                    <span asp-validation-for="ParentId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Content" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <textarea id="summernote" class="form-control" style="resize: none;" asp-for="Content" rows="5"
+                        placeholder="Write about your Category..."></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button class="btn btn-secondary">
+                <a asp-action="Lists" style="text-decoration: none;" class="text-white">Cancel</a>
+            </button>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml"></partial>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#summernote').summernote();
+        })
+    </script>
+}

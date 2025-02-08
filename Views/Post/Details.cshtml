@@ -1,0 +1,15 @@
+@model Post
+@{
+    ViewData["Title"] = "Post Details";
+}
+<partial name="~/Views/Shared/Common/_TitleNavigationPartial.cshtml" model='("Post Details", "/", "Dashboard", "Details")'/>
+<div class="container mt-5">
+    <div class="card" style="width: 24rem;">
+        <img src="@Model.Media" class="card-img-top" alt="Media">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Title</h5>
+            <p class="card-text">@Html.Raw(@Model.Content)</p>
+            <p class="card-text"><small class="text-muted">Published At: @Model.PublishedAt</small></p>
+            <p class="card-text"><strong>Status:</strong> @Model.Status</p>
+        </div>
+    </div>

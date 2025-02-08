@@ -1,0 +1,39 @@
+@model User
+@{
+    ViewData["Title"] = "User Details";
+}
+<partial name="~/Views/Shared/Common/_TitleNavigationPartial.cshtml"
+    model='("User Details", "/", "Dashboard", "Details")' />
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="text-center mt-2">
+                    <img src="@Model.Profile" width="200" height="200" class="img-thumbnail" alt="User Profile Picture">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center">User Details</h5>
+                    <p class="card-text">
+                        <strong>Name:</strong>
+                        @Model.FirstName @Model.MiddleName @Model.LastName
+                    </p>
+                    <p class="card-text">
+                        <strong>Phone:</strong> @Model.Phone
+                    </p>
+                    <p class="card-text">
+                        <strong>Email:</strong> @Model.Email
+                    </p>
+                    <p class="card-text">
+                        <strong>Introduction:</strong> @Html.Raw(Model.Intro)
+                    </p>
+                    <p class="card-text">
+                        <strong>Registered At:</strong> @Model.RejisteredAt.ToString("yyyy-MM-dd")
+                    </p>
+                    <p class="card-text">
+                        <strong>Last Login:</strong> @Model.LastLogin.ToString("yyyy-MM-dd")
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
